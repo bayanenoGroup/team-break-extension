@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>نَفَس</title>
+  <link rel="stylesheet" href="../lib/base.css">
+  <link rel="stylesheet" href="break.css">
+</head>
+<body>
+  <main class="card" id="card">
+    <div class="emoji" id="emoji">☕</div>
+    <h1 id="title">وقت استراحته!</h1>
+    <p class="message" id="message"></p>
+
+    <div class="timer" id="timerBox">
+      <svg viewBox="0 0 120 120" class="ring" aria-hidden="true">
+        <circle cx="60" cy="60" r="52" class="ring-bg"></circle>
+        <circle cx="60" cy="60" r="52" class="ring-fg" id="ring"></circle>
+      </svg>
+      <div class="clock" id="clock">--:--</div>
+    </div>
+    <p class="sub" id="sub"></p>
+
+    <div class="actions">
+      <button class="btn primary" id="primary" hidden></button>
+      <button class="btn ghost" id="skip" hidden>الان نمی‌تونم</button>
+    </div>
+
+    <div class="confirm" id="confirm" hidden>
+      <p id="confirmText"></p>
+      <div class="actions">
+        <button class="btn ghost" id="confirmYes">آره، مطمئنم</button>
+        <button class="btn primary" id="confirmNo">باشه، می‌رم استراحت</button>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="break.js"></script>
+</body>
+</html>

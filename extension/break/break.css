@@ -1,0 +1,89 @@
+html, body { height: 100%; }
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: var(--break-soft);
+}
+body.back, body.finished { background: var(--brand-soft); }
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 24px 22px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .08);
+}
+
+.emoji {
+  font-size: 56px;
+  line-height: 1;
+  animation: bob 2.4s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .emoji { animation: none; }
+}
+
+h1 {
+  font-size: 22px;
+  margin: 12px 0 6px;
+}
+
+.message {
+  margin: 0 0 14px;
+  font-size: 15px;
+  min-height: 3.4em;
+}
+
+.timer {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
+.ring { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring-bg { fill: none; stroke: var(--border); stroke-width: 9; }
+.ring-fg {
+  fill: none;
+  stroke: var(--break);
+  stroke-width: 9;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+body.back .ring-fg, body.finished .ring-fg { stroke: var(--brand); }
+
+.clock {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  font-feature-settings: 'tnum';
+}
+
+.sub { color: var(--muted); margin: 8px 0 16px; }
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.confirm {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+.confirm p { margin: 0 0 10px; }

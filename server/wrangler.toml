@@ -1,0 +1,19 @@
+name = "nafas-team-break"
+main = "src/index.js"
+compatibility_date = "2025-10-01"
+
+# One Durable Object holds every group. SQLite-backed Durable Objects
+# are available on the Workers free plan.
+[[durable_objects.bindings]]
+name = "HUB"
+class_name = "Hub"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Hub"]
+
+# Uncomment and set your own (sub)domain on Cloudflare.
+# *.workers.dev is often filtered inside Iran, a custom domain usually is not.
+# routes = [
+#   { pattern = "nafas-api.example.com", custom_domain = true }
+# ]
