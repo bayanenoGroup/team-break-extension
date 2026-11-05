@@ -40,9 +40,17 @@ extension/            افزونه‌ی کروم (Manifest V3، بدون build)
   popup/              رابط اصلی
   break/              پنجره‌ی استراحت / برگشت به کار / پایان
 server/               Cloudflare Worker + یک Durable Object (SQLite)
+server-php/           همان API با PHP 7.4+ و MySQL (برای سرور بیان‌نو)
 ```
 
 **نحوه‌ی همگام‌سازی:** سرور هر ثانیه چیزی نمی‌فرستد. فقط «برنامه» را نگه می‌دارد (مدل، تعداد حلقه، زمان شروع، زمان مکث). هر افزونه از روی آن و ساعت سرور حساب می‌کند الان کجای چرخه است. افزونه هر ۳۰ ثانیه وضعیت را می‌گیرد (برای مکث/توقف/حذف) و برای پایان هر فاز یک `chrome.alarms` دقیق می‌گذارد.
+
+## دو نسخه‌ی سرور
+
+- **Cloudflare** (`server/`): پایین توضیح داده شده.
+- **PHP + MySQL** (`server-php/`): برای میزبانی روی سرور خودتان. راهنمای نصب روی سرور بیان‌نو: [`docs/deploy-bayaneno.md`](docs/deploy-bayaneno.md).
+
+هر دو نسخه یک API دارند و با یک تست سنجیده می‌شوند (`server/test/api.smoke.mjs`). `server-php/test/models-parity.mjs` بررسی می‌کند جدول مدل‌های PHP با `extension/lib/models.js` یکی باشد.
 
 ## راه‌اندازی سرور (Cloudflare)
 
