@@ -20,6 +20,17 @@
 7. **تست:** `curl https://nafas.bayaneno.com/health` باید `{"ok":true,...}` بدهد، سپس `node server/test/api.smoke.mjs https://nafas.bayaneno.com` (۳۲ بررسی؛ چند کاربر و گروه آزمایشی در دیتابیس `bayaneno_nafas` می‌سازد که بی‌ضرر است).
 8. **افزونه:** `DEFAULT_SERVER_URL` در `extension/config.js` = `https://nafas.bayaneno.com`.
 
+## وضعیت نصب (۱۴ آبان ۱۴۰۵)
+
+نصب شد و ۳۲ از ۳۲ تست API از بیرون پاس شد.
+
+- کد: `/home/bayaneno/domains/nafas` (مالک bayaneno)
+- vhost: `/etc/nginx/nafas.bayaneno.com.conf` (همان `server-php/nginx.example.conf`)، include از `/etc/nginx/nginx-includes.conf`؛ بکاپ: `nginx-includes.conf.bak-nafas-20261105-142750`
+- PHP: pool `php74-1002` کاربر bayaneno
+- SSL: گواهی پیش‌فرض سرور؛ کاربر گواهی ابرآروان را می‌بیند
+- دیتابیس: `bayaneno_nafas` (InnoDB، utf8mb4)، یوزر `bayaneno_nafas@localhost` فقط روی همین دیتابیس
+- پاسخ‌های API در ابرآروان کش نمی‌شوند (`x-cache: BYPASS`) و هدر Authorization رد می‌شود
+
 ## به‌روزرسانی
 
 ```bash
