@@ -5,16 +5,13 @@
 import { DEFAULT_SERVER_URL } from '../config.js';
 
 export async function getSettings() {
-  const s = await chrome.storage.local.get(['serverUrl', 'token', 'userId']);
+  // The server address is fixed at build time (config.js); users cannot change it.
+  const s = await chrome.storage.local.get(['token', 'userId']);
   return {
-    serverUrl: (s.serverUrl || DEFAULT_SERVER_URL || '').replace(/\/+$/, ''),
+    serverUrl: (DEFAULT_SERVER_URL || '').replace(/\/+$/, ''),
     token: s.token || null,
     userId: s.userId || null,
   };
-}
-
-export async function setServerUrl(url) {
-  await chrome.storage.local.set({ serverUrl: String(url || '').trim().replace(/\/+$/, '') });
 }
 
 export class ApiError extends Error {

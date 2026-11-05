@@ -1,4 +1,4 @@
-import { api, register, getSettings, setServerUrl, cachedState, serverNow } from '../lib/api.js';
+import { api, register, getSettings, cachedState, serverNow } from '../lib/api.js';
 import {
   MODELS,
   MIN_CYCLES,
@@ -18,7 +18,6 @@ const ui = {
   picking: false,
   modelId: 'pomodoro',
   cycles: 4,
-  showSettings: false,
   armed: null, // id of a destructive button waiting for a second click
 };
 
@@ -91,17 +90,13 @@ async function render() {
   const settings = await getSettings();
   app.replaceChildren();
 
-  if (!settings.serverUrl || ui.showSettings) {
-    app.append(settingsView(settings));
-    if (!settings.serverUrl) return;
-  }
   if (!settings.token) {
     app.append(registerView());
     return;
   }
   if (!state) {
     app.append(h('p', { class: 'muted center' }, 'در حال اتصال به سرور…'));
-    app.append(h('button', { class: 'link', onclick: () => { ui.showSettings = true; render(); } }, 'تنظیمات سرور'));
+    app.append(h('button', { class: 'link', onclick: () => run(() => api.state()) }, 'تلاش دوباره'));
     return;
   }
   if (!state.group) {
@@ -111,38 +106,6 @@ async function render() {
   }
   app.append(footerLinks());
   tick();
-}
-
-function settingsView(settings) {
-  const input = h('input', {
-    class: 'input',
-    dir: 'ltr',
-    placeholder: 'https://nafas-api.example.com',
-    value: settings.serverUrl,
-  });
-  return h('section', { class: 'panel' },
-    h('h2', {}, 'تنظیمات سرور'),
-    h('p', { class: 'muted small' }, 'آدرس Worker کلودفلر که در README توضیح داده شده.'),
-    input,
-    h('div', { class: 'actions', style: 'margin-top:8px' },
-      h('button', {
-        class: 'btn primary',
-        onclick: async () => {
-          let url = input.value.trim();
-          if (url && !/^https?:\/\//.test(url)) url = `https://${url}`;
-          await setServerUrl(url);
-          ui.showSettings = false;
-          run(async () => {
-            if ((await getSettings()).token) await api.state();
-          });
-        },
-      }, 'ذخیره'),
-      settings.serverUrl && h('button', {
-        class: 'btn ghost',
-        onclick: () => { ui.showSettings = false; render(); },
-      }, 'انصراف'),
-    ),
-  );
 }
 
 function registerView() {
@@ -379,7 +342,6 @@ function footerLinks() {
         if (name !== null) run(() => api.rename(name));
       },
     }, `تغییر نام (${state.user.name})`),
-    h('button', { class: 'link', onclick: () => { ui.showSettings = true; render(); } }, 'تنظیمات سرور'),
   );
 }
 
@@ -419,6 +381,6 @@ chrome.storage.onChanged.addListener(async (changes, area) => {
     ui.cycles = state.group.schedule.cycles;
   }
   render();
-  const { token, serverUrl } = await getSettings();
-  if (token && serverUrl) run(() => api.state());
+  const { token } = await getSettings();
+  if (token) run(() => api.state());
 })();
