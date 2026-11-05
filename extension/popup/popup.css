@@ -1,8 +1,7 @@
+/* Shown in Chrome's side panel: fill whatever width the user gives it. */
 body {
-  width: 380px;
-  min-height: 300px;
-  max-height: 600px;
-  overflow-y: auto;
+  min-width: 280px;
+  min-height: 100vh;
 }
 
 .top {

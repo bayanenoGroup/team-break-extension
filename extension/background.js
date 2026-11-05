@@ -13,6 +13,9 @@ const RECENT_FINISH = 10 * 60 * 1000;
 chrome.runtime.onInstalled.addListener(boot);
 chrome.runtime.onStartup.addListener(boot);
 
+// Clicking the toolbar icon opens the side panel (no popup over the page).
+chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(() => {});
+
 async function boot() {
   await chrome.alarms.create(POLL, { periodInMinutes: 0.5 });
   await sync();
